@@ -15,7 +15,7 @@ env:
   jobs:
     build-infra:
       name: terraform-ci-cd
-      run-on:ubuntu-latest
+      runs-on:ubuntu-latest
       step:
            - name: Checkout
               uses: action/checkout@v2
