@@ -1,43 +1,39 @@
-name: Terraform CI CD pipeline for deploying aws t54
-run-name: ${{github.actor}} has triggered the pipeline
+
+name: Terraform Apply
 
 on:
-   push:
-        branches:
-            - 'main'
+  push:
+    branches:
+      - main   # Run when code is pushed to the 'main' branch
+  pull_request:
+    branches:
+      - main   # Run for pull requests targeting 'main'
 
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
 
-env:
-  AWS_ACCESS_KEY: ${{secret.AWS_ACCESS_KEY }}
-  AWS_SECRET_ACCESS_KEY: ${{secret.AWS_SECRET_ACCESS_KEY }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: '1.5.0'  # Specify the desired Terraform version
 
-  jobs:
-    build-infra:
-      name: terraform-ci-cd
-      runs-on: ubuntu-latest
-      step:
-           - name : Checkout
-              uses: actions/checkout@v2
-           - name : Set up Terraform
-              uses: hashicorp/setup-terraform@v2 
-            
-           -name: Terraform Init 
-              Id: Init 
-              Run: terraform Init 
-              working-directory: ./Single_server
-            
-           -name: Terraform Validate 
-              Id: validate 
-              Run: terraform validate 
-              working-directory: ./Single_server
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ secrets.AWS_REGION }}
 
-           - name: Terraform plan 
-              Id: plan 
-              Run: terraform plan
-              working-directory: ./Single_server
+    - name: Initialize Terraform
+      run: terraform init
 
-            - name: Terraform apply 
-              Id: apply 
-              Run: terraform apply --auto-approve
-              working-directory: ./Single_server
+    - name: Plan Terraform deployment
+      run: terraform plan
+
+    - name: Apply Terraform deployment
+      run: terraform apply -auto-approve
