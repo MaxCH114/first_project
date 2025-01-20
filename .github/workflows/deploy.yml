@@ -20,7 +20,7 @@ env:
            - name : Checkout
               uses: actions/checkout@v2
            - name : Set up Terraform
-              uses: hashcorp/setup-terraform@v2
+              uses: hashicorp/setup-terraform@v2 
             
            -name: Terraform Init 
               Id: Init 
