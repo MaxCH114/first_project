@@ -28,9 +28,12 @@ jobs:
 
     - name: Initialize Terraform
       run: terraform init
+      working-directory: ./first
 
     - name: Plan Terraform deployment
       run: terraform plan
+      working-directory: ./first
 
     - name: Apply Terraform deployment
       run: terraform apply -auto-approve
+      working-directory: ./first
