@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 // Create an S3 bucket resource
-resource "aws_s3_bucket" "Titans_pic_2025" {
+resource "aws_s3_bucket" "Titanssssss_pic_2025" {
 
   
   // Set the access control list to private
