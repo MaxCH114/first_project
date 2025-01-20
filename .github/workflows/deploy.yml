@@ -17,9 +17,9 @@ env:
       name: terraform-ci-cd
       runs-on: ubuntu-latest
       step:
-           - name: Checkout
+           - name : Checkout
               uses: actions/checkout@v2
-           - name: Set up Terraform
+           - name : Set up Terraform
               uses: hashcorp/setup-terraform@v2
             
            -name: Terraform Init 
