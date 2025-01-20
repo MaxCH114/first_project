@@ -1,4 +1,4 @@
-]'[';55    name: Terraform CI CD pipeline for deploying aws t54
+name: Terraform CI CD pipeline for deploying aws t54
 run-name: ${{github.actor}} has triggered the pipeline
 
 on:
