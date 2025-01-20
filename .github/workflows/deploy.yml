@@ -1,0 +1,43 @@
+]'[';55    name: Terraform CI CD pipeline for deploying aws t54
+run-name: ${{github.actor}} has triggered the pipeline
+
+on:
+   push:
+        branches:
+            - 'main'
+
+
+env:
+  AWS_ACCESS_KEY: ${{secret.AWS_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{secret.AWS_SECRET_ACCESS_KEY }}
+
+
+  jobs:
+    build-infra:
+      name: terraform-ci-cd
+      run-on:ubuntu-latest
+      step:
+           - name: Checkout
+              uses: action/checkout@v2
+           - name: Set up Terraform
+              uses: hashcorp/setup-terraform@v2
+            
+           -name: Terraform Init 
+              Id: Init 
+              Run: terraform Init 
+              working-directory: ./Single_server
+            
+           -name: Terraform Validate 
+              Id: validate 
+              Run: terraform validate 
+              working-directory: ./Single_server
+
+           - name: Terraform plan 
+              Id: plan 
+              Run: terraform plan
+              working-directory: ./Single_server
+
+            - name: Terraform apply 
+              Id: apply 
+              Run: terraform apply --auto-approve
+              working-directory: ./Single_server
